@@ -15,6 +15,8 @@ var itemIndex3 = 2;
 
 var allItems = [];
 
+var numberOfItems = 3;
+
 //add constructor for all items
 function Item(name, imageURL) {
     this.name = name;
@@ -46,6 +48,18 @@ new Item('unicorn', '../images/unicorn.jpg');
 new Item('usb', '../images/usb.gif');
 new Item('water-can', '../images/water-can.jpg');
 new Item('wine-glass', '../images/wine-glass.jpg');
+
+
+//attempting stretch goal of making item images dynamically
+var imageLocation = document.getElementById('images');
+for (var i = 0; i < numberOfItems; i++) {
+    var image = document.createElement('img');
+    image.src = allItems[i].imageURL;
+    // console.log(image.src)
+    image.setAttribute('id', (i + 1));
+    // console.log(imageElements, image.getAttribute('id'));
+    imageLocation.appendChild(image);
+}
 
 
 //event listener
