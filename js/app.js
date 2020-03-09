@@ -1,24 +1,29 @@
 'use strict';
 console.log('this page is running!');
 
+
+//global variables
 var imageElements = document.getElementsByTagName('img');
 
-var ItemIndex1 = 0;
-var ItemIndex2 = 1;
-var ItemIndex3 = 2;
+var totalclicks = 0
+
+var itemIndex1 = 0;
+var itemIndex2 = 1;
+var itemIndex3 = 2;
 
 var allItems = [];
 
 //add constructor for all items
-
 function Item(name, imageURL) {
     this.name = name;
     this.imageURL = imageURL
-    this.timesclicked = 0;
+    this.timesClicked = 0;
     this.timesShown = 0;
     allItems.push(this);
 }
 
+
+//objects
 new Item('bag', '../images/bag.jpg');
 new Item('banana', '../images/banana.jpg');
 new Item('bathroom', '../images/bathroom.jpg');
@@ -36,6 +41,53 @@ new Item('shark', '../images/shark.jpg');
 new Item('sweep', '../images/sweep.jpg');
 new Item('tauntaun', '../images/tauntaun.jpg');
 new Item('unicorn', '../images/unicorn.jpg');
-new Item('usb', '../images/usb.jpg');
+new Item('usb', '../images/usb.gif');
 new Item('water-can', '../images/water-can.jpg');
 new Item('wine-glass', '../images/wine-glass.jpg');
+
+
+//event listener
+for(var i = 0; i < imageElements.length; i++){
+    // console.log('this is the event listener for the click on pizza event');
+    //   debugger;
+    imageElements[i].addEventListener('click', itemWasClicked);
+  }
+
+//main function
+function itemWasClicked(event) {
+        totalclicks++;
+        if(event.srcElement.id === '1'){
+            allItems[itemIndex1].timesClicked++;
+            console.log('1 was clicked');
+          } else if (event.srcElement.id === '2'){
+            allItems[itemIndex2].timesClicked++;
+            console.log('2 was clicked');
+        } else if (event.srcElement.id === '3'){
+            allItems[itemIndex3].timesClicked++;
+            console.log('3 was clicked'); 
+          }
+
+//change picture after click, making sure not to repeat
+var nextItem1 = Math.floor(Math.random() * allItems.length);
+while (nextItem1 === itemIndex1 || nextItem1 === itemIndex2 || nextItem1 === itemIndex3) {
+    nextItem1 = Math.floor(Math.random() * allItems.length);
+}
+var nextItem2 = Math.floor(Math.random() * allItems.length);
+while (nextItem2 === itemIndex1 || nextItem2 === itemIndex2 || nextItem2 === itemIndex3) {
+    nextItem2 = Math.floor(Math.random() * allItems.length);
+}
+var nextItem3 = Math.floor(Math.random() * allItems.length);
+while (nextItem1 === itemIndex1 || nextItem3 === itemIndex2 || nextItem3 === itemIndex3) {
+    nextItem3 = Math.floor(Math.random() * allItems.length);
+}
+
+//Set up a ref
+itemIndex1 = nextItem1;
+itemIndex2 = nextItem2;
+itemIndex3 = nextItem3;
+
+//display images 
+imageElements[0].src = allItems[itemIndex1].imageURL;
+imageElements[1].src = allItems[itemIndex2].imageURL;
+imageElements[2].src = allItems[itemIndex3].imageURL;
+}
