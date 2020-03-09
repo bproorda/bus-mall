@@ -5,7 +5,9 @@ console.log('this page is running!');
 //global variables
 var imageElements = document.getElementsByTagName('img');
 
-var totalclicks = 0
+var totalclicks = 0;
+
+var rounds = 25;
 
 var itemIndex1 = 0;
 var itemIndex2 = 1;
@@ -38,7 +40,7 @@ new Item('pen', '../images/pen.jpg');
 new Item('pet-sweep', '../images/pet-sweep.jpg');
 new Item('scissors', '../images/scissors.jpg');
 new Item('shark', '../images/shark.jpg');
-new Item('sweep', '../images/sweep.jpg');
+new Item('sweep', '../images/sweep.png');
 new Item('tauntaun', '../images/tauntaun.jpg');
 new Item('unicorn', '../images/unicorn.jpg');
 new Item('usb', '../images/usb.gif');
@@ -56,6 +58,7 @@ for(var i = 0; i < imageElements.length; i++){
 //main function
 function itemWasClicked(event) {
         totalclicks++;
+        console.log(totalclicks);
         if(event.srcElement.id === '1'){
             allItems[itemIndex1].timesClicked++;
             console.log('1 was clicked');
@@ -81,13 +84,48 @@ while (nextItem1 === itemIndex1 || nextItem3 === itemIndex2 || nextItem3 === ite
     nextItem3 = Math.floor(Math.random() * allItems.length);
 }
 
+//making sure an image is not repeated on the screen
+//CURRENTLY NOT WORKING!!!!
+// while (nextItem1 === nextItem2 || nextItem1 === nextItem3) {
+//     while (nextItem1 === itemIndex1 || nextItem1 === itemIndex2 || nextItem1 === itemIndex3) {
+//         nextItem1 = Math.floor(Math.random() * allItems.length);
+// }
+// }
+// while (nextItem2 === nextItem1 || nextItem2 === nextItem3) {
+//     while (nextItem2 === itemIndex1 || nextItem2 === itemIndex2 || nextItem2 === itemIndex3) {
+//         nextItem2 = Math.floor(Math.random() * allItems.length);
+//     }
+// }
+// while (nextItem3 === nextItem1 || nextItem3 === nextItem2) {
+//     while (nextItem3 === itemIndex1 || nextItem3 === itemIndex2 || nextItem3 === itemIndex3) {
+//         nextItem3 = Math.floor(Math.random() * allItems.length);
+// }
+// }
+
+
 //Set up a ref
 itemIndex1 = nextItem1;
+allItems[itemIndex1].timesShown++;
+console.log(allItems[itemIndex1].timesShown++);
 itemIndex2 = nextItem2;
+allItems[itemIndex2].timesShown++;
 itemIndex3 = nextItem3;
+allItems[itemIndex3].timesShown++;
 
 //display images 
 imageElements[0].src = allItems[itemIndex1].imageURL;
 imageElements[1].src = allItems[itemIndex2].imageURL;
 imageElements[2].src = allItems[itemIndex3].imageURL;
+
+
+//removing event listener when max rounds reached
+if (totalclicks === rounds) {
+    for(var i = 0; i < imageElements.length; i++){
+        imageElements[i].removeEventListener('click', itemWasClicked);
+      }
+      console.log('event listener removed!');
+}
+
+
+//end of function curly bracket
 }
