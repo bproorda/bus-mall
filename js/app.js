@@ -58,59 +58,46 @@ for(var i = 0; i < imageElements.length; i++){
 //main function
 function itemWasClicked(event) {
         totalclicks++;
-        console.log(totalclicks);
+        console.log(totalclicks + ' clicks');
         if(event.srcElement.id === '1'){
             allItems[itemIndex1].timesClicked++;
-            console.log('1 was clicked');
+            // console.log('1 was clicked');
           } else if (event.srcElement.id === '2'){
             allItems[itemIndex2].timesClicked++;
-            console.log('2 was clicked');
+            // console.log('2 was clicked');
         } else if (event.srcElement.id === '3'){
             allItems[itemIndex3].timesClicked++;
-            console.log('3 was clicked'); 
+            // console.log('3 was clicked'); 
           }
 
 //change picture after click, making sure not to repeat
+//next Item 1
 var nextItem1 = Math.floor(Math.random() * allItems.length);
 while (nextItem1 === itemIndex1 || nextItem1 === itemIndex2 || nextItem1 === itemIndex3) {
     nextItem1 = Math.floor(Math.random() * allItems.length);
 }
+itemIndex1 = nextItem1;
+allItems[itemIndex1].timesShown++;
+console.log(itemIndex1);
+
+//next Item 2
 var nextItem2 = Math.floor(Math.random() * allItems.length);
 while (nextItem2 === itemIndex1 || nextItem2 === itemIndex2 || nextItem2 === itemIndex3) {
     nextItem2 = Math.floor(Math.random() * allItems.length);
 }
-var nextItem3 = Math.floor(Math.random() * allItems.length);
-while (nextItem1 === itemIndex1 || nextItem3 === itemIndex2 || nextItem3 === itemIndex3) {
-    nextItem3 = Math.floor(Math.random() * allItems.length);
-}
-
-//making sure an image is not repeated on the screen
-//CURRENTLY NOT WORKING!!!!
-// while (nextItem1 === nextItem2 || nextItem1 === nextItem3) {
-//     while (nextItem1 === itemIndex1 || nextItem1 === itemIndex2 || nextItem1 === itemIndex3) {
-//         nextItem1 = Math.floor(Math.random() * allItems.length);
-// }
-// }
-// while (nextItem2 === nextItem1 || nextItem2 === nextItem3) {
-//     while (nextItem2 === itemIndex1 || nextItem2 === itemIndex2 || nextItem2 === itemIndex3) {
-//         nextItem2 = Math.floor(Math.random() * allItems.length);
-//     }
-// }
-// while (nextItem3 === nextItem1 || nextItem3 === nextItem2) {
-//     while (nextItem3 === itemIndex1 || nextItem3 === itemIndex2 || nextItem3 === itemIndex3) {
-//         nextItem3 = Math.floor(Math.random() * allItems.length);
-// }
-// }
-
-
-//Set up a ref
-itemIndex1 = nextItem1;
-allItems[itemIndex1].timesShown++;
-console.log(allItems[itemIndex1].timesShown++);
 itemIndex2 = nextItem2;
 allItems[itemIndex2].timesShown++;
+console.log(itemIndex2)
+
+//next Item 3
+var nextItem3 = Math.floor(Math.random() * allItems.length);
+while (nextItem3 === itemIndex1 || nextItem3 === itemIndex2 || nextItem3 === itemIndex3) {
+    nextItem3 = Math.floor(Math.random() * allItems.length);
+}
 itemIndex3 = nextItem3;
 allItems[itemIndex3].timesShown++;
+console.log(itemIndex3);
+
 
 //display images 
 imageElements[0].src = allItems[itemIndex1].imageURL;
@@ -124,6 +111,19 @@ if (totalclicks === rounds) {
         imageElements[i].removeEventListener('click', itemWasClicked);
       }
       console.log('event listener removed!');
+
+ //creating result list  
+ var listNode = document.getElementById('results');
+
+ for (var i = 0; i < allItems.length; i++) {
+     var li = document.createElement('li');
+     li.textContent = `${allItems[i].name}: shown ${allItems[i].timesShown}, times  clicked ${allItems[i].timesClicked} times. clicked ${Math.floor(((allItems[i].timesClicked / allItems[i].timesShown)*100))}%`
+     listNode.appendChild(li);
+ }
+
+ 
+
+//end of if statment, long isn't it?  
 }
 
 
