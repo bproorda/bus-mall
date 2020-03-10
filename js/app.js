@@ -106,6 +106,10 @@ for (var z = 0; z < imageElements.length; z++) {
 //removing event listener when max rounds reached
 if (totalclicks === rounds) {
     resultList.style.display = 'inline-block';
+
+    var pageHeader = document.getElementById('pageHeader');
+    pageHeader.textContent = 'Results of Survey';
+    
     for(var i = 0; i < imageElements.length; i++){
         imageElements[i].removeEventListener('click', itemWasClicked);
       }

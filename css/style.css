@@ -18,8 +18,8 @@ aside {
 }
 .images {
     display: inline-block;
-    margin-right: 50px;
-    clear: both;
+    margin-right: 0 auto;
+    width: 900px;
 }
 article {
     display: inline-block;
