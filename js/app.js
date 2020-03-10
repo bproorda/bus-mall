@@ -7,11 +7,8 @@ var imageElements = document.getElementsByTagName('img');
 
 var totalclicks = 0;
 
-var rounds = 5;
+var rounds = 25;
 
-// var itemIndex1 = 0;
-// var itemIndex2 = 1;
-// var itemIndex3 = 2;
 var itemIndex = [];
 
 var allItems = [];
@@ -49,6 +46,9 @@ new Item('unicorn', '../images/unicorn.jpg');
 new Item('usb', '../images/usb.gif');
 new Item('water-can', '../images/water-can.jpg');
 new Item('wine-glass', '../images/wine-glass.jpg');
+
+var resultList = document.getElementById('results');
+resultList.style.display = 'none';
 
 
 //attempting stretch goal of making item images dynamically
@@ -105,6 +105,7 @@ for (var z = 0; z < imageElements.length; z++) {
 
 //removing event listener when max rounds reached
 if (totalclicks === rounds) {
+    resultList.style.display = 'inline-block';
     for(var i = 0; i < imageElements.length; i++){
         imageElements[i].removeEventListener('click', itemWasClicked);
       }
@@ -115,19 +116,26 @@ if (totalclicks === rounds) {
 
  for (var i = 0; i < allItems.length; i++) {
      var li = document.createElement('li');
-     li.textContent = `${allItems[i].name}: shown ${allItems[i].timesShown}, times  clicked ${allItems[i].timesClicked} times. clicked ${Math.floor(((allItems[i].timesClicked / allItems[i].timesShown)*100))}%`
-     listNode.appendChild(li);
+
+    if (allItems[i].timesClicked === 0) {
+        var math = 0;
+    } else {
+        math = Math.round( ( (allItems[i].timesClicked / allItems[0].timesShown).toFixed(2) * 100) );
+    }
+    li.textContent = `${allItems[i].name}:   Shown ${allItems[i].timesShown} times,    Clicked ${allItems[i].timesClicked} times,   Percent clicked is   ${math}%`
+    listNode.appendChild(li);
  }
 
- 
+var picture = document.getElementById('images');
+picture.style.display = 'none';
  createChart();
+ radar();
 //end of if statment, long isn't it?  
 }
 
 
 //end of function curly bracket
 }
-
 
 function findTheProperty(nameOfTheProperty) {
     var answer = [];
@@ -173,6 +181,41 @@ var myChart = new Chart(ctx, {
                 }
             }]
         }
+    }
+});
+}
+
+function radar() {
+new Chart(document.getElementById("radar-chart"), {
+    type: 'radar',
+    data: {
+      labels: findTheProperty('name'),
+      datasets: [
+        {
+          label: "Times Shown",
+          fill: true,
+          backgroundColor: "rgba(179,181,198,0.2)",
+          borderColor: "rgba(179,181,198,1)",
+          pointBorderColor: "#fff",
+          pointBackgroundColor: "rgba(179,181,198,1)",
+          data: findTheProperty('timesShown')
+        }, {
+          label: "Times Clicked",
+          fill: true,
+          backgroundColor: "rgba(255,99,132,0.2)",
+          borderColor: "rgba(255,99,132,1)",
+          pointBorderColor: "#fff",
+          pointBackgroundColor: "rgba(255,99,132,1)",
+          pointBorderColor: "#fff",
+          data: findTheProperty('timesClicked')
+        }
+      ]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'Comparison of times clicked with times shown'
+      }
     }
 });
 }

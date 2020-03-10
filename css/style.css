@@ -13,7 +13,8 @@ main {
 }
 aside {
     display: inline-block;
-    width: 375px;
+    width: 475px;
+    margin-right: 50px;
 }
 .images {
     display: inline-block;
@@ -22,4 +23,15 @@ aside {
 }
 article {
     display: inline-block;
+}
+footer div {
+    width: 400px;
+    height: 400px;
+}
+#bigChart {
+    width: 800px;
+    height: 800px;
+}
+li {
+    padding: 10px;
 }
