@@ -4,7 +4,7 @@ console.log('this page is running!');
 //global variables
 var imageElements = document.getElementsByTagName('img');
 var totalclicks = 0;
-var rounds = 5;
+var rounds = 25;
 var itemIndex = [];
 var allItems = [];
 var numberOfItems = 3;
