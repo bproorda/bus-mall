@@ -4,7 +4,7 @@ console.log('this page is running!');
 //global variables
 var imageElements = document.getElementsByTagName('img');
 var totalclicks = 0;
-var rounds = 25;
+var rounds = 5;
 var itemIndex = [];
 var allItems = [];
 var numberOfItems = 3;
@@ -18,26 +18,26 @@ function Item(name, imageURL) {
     allItems.push(this);
 }
 //objects
-new Item('bag', '../images/bag.jpg');
-new Item('banana', '../images/banana.jpg');
-new Item('bathroom', '../images/bathroom.jpg');
-new Item('boots', '../images/boots.jpg');
-new Item('breakfast', '../images/breakfast.jpg');
-new Item('bubblegum', '../images/bubblegum.jpg');
-new Item('chair', '../images/chair.jpg');
-new Item('cthulhu', '../images/cthulhu.jpg');
-new Item('dog-duck', '../images/dog-duck.jpg');
-new Item('dragon', '../images/dragon.jpg');
-new Item('pen', '../images/pen.jpg');
-new Item('pet-sweep', '../images/pet-sweep.jpg');
-new Item('scissors', '../images/scissors.jpg');
-new Item('shark', '../images/shark.jpg');
-new Item('sweep', '../images/sweep.png');
-new Item('tauntaun', '../images/tauntaun.jpg');
-new Item('unicorn', '../images/unicorn.jpg');
-new Item('usb', '../images/usb.gif');
-new Item('water-can', '../images/water-can.jpg');
-new Item('wine-glass', '../images/wine-glass.jpg');
+new Item('bag', 'images/bag.jpg');
+new Item('banana', 'images/banana.jpg');
+new Item('bathroom', 'images/bathroom.jpg');
+new Item('boots', 'images/boots.jpg');
+new Item('breakfast', 'images/breakfast.jpg');
+new Item('bubblegum', 'images/bubblegum.jpg');
+new Item('chair', 'images/chair.jpg');
+new Item('cthulhu', 'images/cthulhu.jpg');
+new Item('dog-duck', 'images/dog-duck.jpg');
+new Item('dragon', 'images/dragon.jpg');
+new Item('pen', 'images/pen.jpg');
+new Item('pet-sweep', 'images/pet-sweep.jpg');
+new Item('scissors', 'images/scissors.jpg');
+new Item('shark', 'images/shark.jpg');
+new Item('sweep', 'images/sweep.png');
+new Item('tauntaun', 'images/tauntaun.jpg');
+new Item('unicorn', 'images/unicorn.jpg');
+new Item('usb', 'images/usb.gif');
+new Item('water-can', 'images/water-can.jpg');
+new Item('wine-glass', 'images/wine-glass.jpg');
 
 //attempting stretch goal of making item images dynamically
 var imageLocation = document.getElementById('images');
@@ -46,6 +46,7 @@ for (var i = 0; i < numberOfItems; i++) {
     image.src = allItems[i].imageURL;
     // console.log(image.src)
     image.setAttribute('id', (i + 1));
+    allItems[i].timesShown++;
     // console.log(imageElements, image.getAttribute('id'));
     imageLocation.appendChild(image);
     itemIndex.push(i);
@@ -92,6 +93,9 @@ for (var z = 0; z < imageElements.length; z++) {
 if (totalclicks === rounds) {
     var resultList = document.getElementById('results');
     resultList.style.display = 'inline-block';
+
+    var footer = document.getElementById('footer');
+    footer.style.display = 'inline-block';
 
     var pageHeader = document.getElementById('pageHeader');
     pageHeader.textContent = 'Results of Survey';

@@ -1,14 +1,29 @@
+* {
+    box-sizing: border-box;
+}
+header {
+    height: 50px;
+    background-color: burlywood;
+    border-bottom: 2 px solid black;
+    margin-bottom: 50px;
+}
+
 h1 {
     text-align: center;
     font-size: 30px;
     font-weight: bolder;
+    margin-bottom: 50px;
 }
 img {
     width: 250px;  
+    margin: 20px;
+    border: 2px solid black;
 }
 
 body {
-    background-image: radial-gradient(blue, red, blue);
+    background-image: radial-gradient(blue, lightgray, blue);
+    background-repeat: no-repeat;
+    min-height: 2000px;
 }
 main {
     width: 100%;
@@ -22,13 +37,17 @@ ul {
     padding: 15px;
     border-radius: 15px;
 }
-.images {
+#images {
     display: inline-block;
-    margin: 0 auto;
+    margin: 25px 25px 150px 25px;
     width: 900px;
+    background-color: blanchedalmond;
+    border-radius: 15px;
+    padding: 20;   
 }
-article {
-    display: inline-block;
+footer {
+    display: none;
+    margin-top: 50px;
 }
 footer div {
     width: 400px;
@@ -39,11 +58,11 @@ footer div {
     padding: 15px;
 }
 #bigChart {
+    margin-top: 50px;
     width: 800px;
     height: 800px;
 }
-
-
 li {
     padding: 10px;
+    list-style-type: circle;
 }
