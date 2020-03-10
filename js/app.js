@@ -1,18 +1,12 @@
 'use strict';
 console.log('this page is running!');
 
-
 //global variables
 var imageElements = document.getElementsByTagName('img');
-
 var totalclicks = 0;
-
 var rounds = 25;
-
 var itemIndex = [];
-
 var allItems = [];
-
 var numberOfItems = 3;
 
 //add constructor for all items
@@ -23,8 +17,6 @@ function Item(name, imageURL) {
     this.timesShown = 0;
     allItems.push(this);
 }
-
-
 //objects
 new Item('bag', '../images/bag.jpg');
 new Item('banana', '../images/banana.jpg');
@@ -47,10 +39,6 @@ new Item('usb', '../images/usb.gif');
 new Item('water-can', '../images/water-can.jpg');
 new Item('wine-glass', '../images/wine-glass.jpg');
 
-var resultList = document.getElementById('results');
-resultList.style.display = 'none';
-
-
 //attempting stretch goal of making item images dynamically
 var imageLocation = document.getElementById('images');
 for (var i = 0; i < numberOfItems; i++) {
@@ -63,11 +51,8 @@ for (var i = 0; i < numberOfItems; i++) {
     itemIndex.push(i);
 }
 
-
 //event listener
 for(var i = 0; i < imageElements.length; i++){
-    // console.log('this is the event listener for the click on pizza event');
-    //   debugger;
     imageElements[i].addEventListener('click', itemWasClicked);
   }
 
@@ -105,11 +90,12 @@ for (var z = 0; z < imageElements.length; z++) {
 
 //removing event listener when max rounds reached
 if (totalclicks === rounds) {
+    var resultList = document.getElementById('results');
     resultList.style.display = 'inline-block';
 
     var pageHeader = document.getElementById('pageHeader');
     pageHeader.textContent = 'Results of Survey';
-    
+
     for(var i = 0; i < imageElements.length; i++){
         imageElements[i].removeEventListener('click', itemWasClicked);
       }
@@ -120,7 +106,6 @@ if (totalclicks === rounds) {
 
  for (var i = 0; i < allItems.length; i++) {
      var li = document.createElement('li');
-
     if (allItems[i].timesClicked === 0) {
         var math = 0;
     } else {
@@ -136,8 +121,6 @@ picture.style.display = 'none';
  radar();
 //end of if statment, long isn't it?  
 }
-
-
 //end of function curly bracket
 }
 
