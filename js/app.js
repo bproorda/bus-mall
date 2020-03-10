@@ -9,9 +9,10 @@ var totalclicks = 0;
 
 var rounds = 25;
 
-var itemIndex1 = 0;
-var itemIndex2 = 1;
-var itemIndex3 = 2;
+// var itemIndex1 = 0;
+// var itemIndex2 = 1;
+// var itemIndex3 = 2;
+var itemIndex = [];
 
 var allItems = [];
 
@@ -59,6 +60,7 @@ for (var i = 0; i < numberOfItems; i++) {
     image.setAttribute('id', (i + 1));
     // console.log(imageElements, image.getAttribute('id'));
     imageLocation.appendChild(image);
+    itemIndex.push(i);
 }
 
 
@@ -73,50 +75,81 @@ for(var i = 0; i < imageElements.length; i++){
 function itemWasClicked(event) {
         totalclicks++;
         console.log(totalclicks + ' clicks');
-        if(event.srcElement.id === '1'){
-            allItems[itemIndex1].timesClicked++;
-            // console.log('1 was clicked');
-          } else if (event.srcElement.id === '2'){
-            allItems[itemIndex2].timesClicked++;
-            // console.log('2 was clicked');
-        } else if (event.srcElement.id === '3'){
-            allItems[itemIndex3].timesClicked++;
-            // console.log('3 was clicked'); 
-          }
+        // if(event.srcElement.id === '1'){
+        //     allItems[itemIndex1].timesClicked++;
+        //     // console.log('1 was clicked');
+        //   } else if (event.srcElement.id === '2'){
+        //     allItems[itemIndex2].timesClicked++;
+        //     // console.log('2 was clicked');
+        // } else if (event.srcElement.id === '3'){
+        //     allItems[itemIndex3].timesClicked++;
+        //     // console.log('3 was clicked'); 
+        //   }
 
-//change picture after click, making sure not to repeat
-//next Item 1
-var nextItem1 = Math.floor(Math.random() * allItems.length);
-while (nextItem1 === itemIndex1 || nextItem1 === itemIndex2 || nextItem1 === itemIndex3) {
-    nextItem1 = Math.floor(Math.random() * allItems.length);
+
+
+//attempting to rework this part for the stretch goal
+
+for (var w = 0; w < imageElements.length; w++) {
+    var checkAgainst = w + 1;
+    var checkAgainst2 = checkAgainst.toString();
+    if (event.srcElement.id == checkAgainst2) {
+        allItems[itemIndex[w]].timesClicked++;
+    }
 }
-itemIndex1 = nextItem1;
-allItems[itemIndex1].timesShown++;
-console.log(itemIndex1);
 
-//next Item 2
-var nextItem2 = Math.floor(Math.random() * allItems.length);
-while (nextItem2 === itemIndex1 || nextItem2 === itemIndex2 || nextItem2 === itemIndex3) {
-    nextItem2 = Math.floor(Math.random() * allItems.length);
+for (var i = 0; i < itemIndex.length; i++) {
+    var nextItem = Math.floor(Math.random() * allItems.length);
+    for (var j = 0; j < itemIndex.length; j++) {
+    
+    if (nextItem === itemIndex[j]) {
+        nextItem = Math.floor(Math.random() * allItems.length);
+    } 
+    }
+    itemIndex[i] = nextItem;
+    allItems[itemIndex[i]].timesShown++;
 }
-itemIndex2 = nextItem2;
-allItems[itemIndex2].timesShown++;
-console.log(itemIndex2)
-
-//next Item 3
-var nextItem3 = Math.floor(Math.random() * allItems.length);
-while (nextItem3 === itemIndex1 || nextItem3 === itemIndex2 || nextItem3 === itemIndex3) {
-    nextItem3 = Math.floor(Math.random() * allItems.length);
+for (var z = 0; z < imageElements.length; z++) {
+    imageElements[z].src = allItems[itemIndex[z]].imageURL;
 }
-itemIndex3 = nextItem3;
-allItems[itemIndex3].timesShown++;
-console.log(itemIndex3);
 
 
-//display images 
-imageElements[0].src = allItems[itemIndex1].imageURL;
-imageElements[1].src = allItems[itemIndex2].imageURL;
-imageElements[2].src = allItems[itemIndex3].imageURL;
+
+
+
+// //change picture after click, making sure not to repeat
+// //next Item 1
+// var nextItem1 = Math.floor(Math.random() * allItems.length);
+// while (nextItem1 === itemIndex1 || nextItem1 === itemIndex2 || nextItem1 === itemIndex3) {
+//     nextItem1 = Math.floor(Math.random() * allItems.length);
+// }
+// itemIndex1 = nextItem1;
+// allItems[itemIndex1].timesShown++;
+// console.log(itemIndex1);
+
+// //next Item 2
+// var nextItem2 = Math.floor(Math.random() * allItems.length);
+// while (nextItem2 === itemIndex1 || nextItem2 === itemIndex2 || nextItem2 === itemIndex3) {
+//     nextItem2 = Math.floor(Math.random() * allItems.length);
+// }
+// itemIndex2 = nextItem2;
+// allItems[itemIndex2].timesShown++;
+// console.log(itemIndex2)
+
+// //next Item 3
+// var nextItem3 = Math.floor(Math.random() * allItems.length);
+// while (nextItem3 === itemIndex1 || nextItem3 === itemIndex2 || nextItem3 === itemIndex3) {
+//     nextItem3 = Math.floor(Math.random() * allItems.length);
+// }
+// itemIndex3 = nextItem3;
+// allItems[itemIndex3].timesShown++;
+// console.log(itemIndex3);
+
+
+// //display images 
+// imageElements[0].src = allItems[itemIndex1].imageURL;
+// imageElements[1].src = allItems[itemIndex2].imageURL;
+// imageElements[2].src = allItems[itemIndex3].imageURL;
 
 
 //removing event listener when max rounds reached
