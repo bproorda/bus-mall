@@ -102,7 +102,9 @@ for (var i = 0; i < itemIndex.length; i++) {
     var nextItem = Math.floor(Math.random() * allItems.length);
     for (var j = 0; j < itemIndex.length; j++) {
     
-    if (nextItem === itemIndex[j]) {
+    if (!itemIndex.every(function(number) {
+        return number !== nextItem;
+    })) {
         nextItem = Math.floor(Math.random() * allItems.length);
     } 
     }
