@@ -6,39 +6,47 @@ var imageElements = document.getElementsByTagName('img');
 var totalclicks = 0;
 var rounds = 25;
 var itemIndex = [];
+var itemNames = ["bag", "banana", "bathroom", "boots", "breakfast", "bubblegum", "chair", "cthulhu", "dog-duck", "dragon", "pen", "pet-sweep", "scissors", "shark", "sweep", "tauntaun", "unicorn", "usb", "water-can", "wine-glass"];
+var imageURLs = ["images/bag.jpg", "images/banana.jpg", "images/bathroom.jpg", "images/boots.jpg", "images/breakfast.jpg", "images/bubblegum.jpg", "images/chair.jpg", "images/cthulhu.jpg", "images/dog-duck.jpg", "images/dragon.jpg", "images/pen.jpg", "images/pet-sweep.jpg", "images/scissors.jpg", "images/shark.jpg", "images/sweep.png", "images/tauntaun.jpg", "images/unicorn.jpg", "images/usb.gif", "images/water-can.jpg", "images/wine-glass.jpg"];
+
+var arrayOfItems = [itemNames, imageURLs];
 var allItems = [];
 var numberOfItems = 3;
 
 //add constructor for all items
-function Item(name, imageURL) {
+function Item(name, imageURL, timesClicked=0, timesShown=0) {
     this.name = name;
     this.imageURL = imageURL
-    this.timesClicked = 0;
-    this.timesShown = 0;
+    this.timesClicked = timesClicked;
+    this.timesShown = timesShown;
     allItems.push(this);
 }
-//objects
-new Item('bag', 'images/bag.jpg');
-new Item('banana', 'images/banana.jpg');
-new Item('bathroom', 'images/bathroom.jpg');
-new Item('boots', 'images/boots.jpg');
-new Item('breakfast', 'images/breakfast.jpg');
-new Item('bubblegum', 'images/bubblegum.jpg');
-new Item('chair', 'images/chair.jpg');
-new Item('cthulhu', 'images/cthulhu.jpg');
-new Item('dog-duck', 'images/dog-duck.jpg');
-new Item('dragon', 'images/dragon.jpg');
-new Item('pen', 'images/pen.jpg');
-new Item('pet-sweep', 'images/pet-sweep.jpg');
-new Item('scissors', 'images/scissors.jpg');
-new Item('shark', 'images/shark.jpg');
-new Item('sweep', 'images/sweep.png');
-new Item('tauntaun', 'images/tauntaun.jpg');
-new Item('unicorn', 'images/unicorn.jpg');
-new Item('usb', 'images/usb.gif');
-new Item('water-can', 'images/water-can.jpg');
-new Item('wine-glass', 'images/wine-glass.jpg');
 
+//checking for local storage
+
+var savedItemsString = localStorage.getItem('savedItems')
+
+if(savedItemsString) {
+    console.log('using saved data');
+    var arrayOfSavedItems = JSON.parse(savedItemsString);
+    console.log(arrayOfSavedItems);
+
+    //creating item objects from saved data
+    for (var i = 0; i < arrayOfSavedItems.length; i++) {
+       var xyz = new Item(arrayOfSavedItems[i].name,
+            arrayOfSavedItems[i].imageURL,
+            arrayOfSavedItems[i].timesClicked,
+            arrayOfSavedItems[i].timesShown);
+            console.log(xyz);
+    } 
+}else {
+
+//creating objects from scratch
+for (var i = 0; i  < arrayOfItems[0].length; i++) {
+    new Item(arrayOfItems[0][i], arrayOfItems[1][i]);
+
+}
+}
 //attempting stretch goal of making item images dynamically
 var imageLocation = document.getElementById('images');
 for (var i = 0; i < numberOfItems; i++) {
@@ -51,6 +59,7 @@ for (var i = 0; i < numberOfItems; i++) {
     imageLocation.appendChild(image);
     itemIndex.push(i);
 }
+
 
 //event listener
 for(var i = 0; i < imageElements.length; i++){
@@ -91,6 +100,8 @@ for (var z = 0; z < imageElements.length; z++) {
 
 //removing event listener when max rounds reached
 if (totalclicks === rounds) {
+
+    localStorage.setItem('savedItems', JSON.stringify(allItems));
     var resultList = document.getElementById('results');
     resultList.style.display = 'inline-block';
 
