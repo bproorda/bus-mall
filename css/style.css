@@ -14,6 +14,7 @@ h1 {
     font-weight: bolder;
     margin-bottom: 50px;
 }
+
 img {
     width: 250px;  
     margin: 20px;
@@ -31,31 +32,32 @@ main {
 ul {
     display: none;
     width: 475px;
-    margin: 0 auto;
+    /* margin: 0 auto; */
+    margin-left: 500px;
     background-color: gray;
     border: 2px solid black;
-    padding: 15px;
+    padding: 25px;
     border-radius: 15px;
 }
 #images {
-    display: inline-block;
-    margin: 25px 25px 150px 25px;
+    margin: 0 auto;
     width: 900px;
     background-color: blanchedalmond;
     border-radius: 15px;
-    padding: 20;   
+    padding: 5px;   
 }
 footer {
     display: none;
     margin-top: 50px;
 }
 footer div {
-    width: 400px;
-    height: 400px;
+    width: 500px;
+    height: 500px;
     background-color: white;
     border: 2px solid black;
     border-radius:  15px;
     padding: 15px;
+    display: inline-block;
 }
 #bigChart {
     margin-top: 50px;

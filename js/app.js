@@ -6,39 +6,46 @@ var imageElements = document.getElementsByTagName('img');
 var totalclicks = 0;
 var rounds = 25;
 var itemIndex = [];
+var itemNames = ["bag", "banana", "bathroom", "boots", "breakfast", "bubblegum", "chair", "cthulhu", "dog-duck", "dragon", "pen", "pet-sweep", "scissors", "shark", "sweep", "tauntaun", "unicorn", "usb", "water-can", "wine-glass"];
+var imageURLs = ["images/bag.jpg", "images/banana.jpg", "images/bathroom.jpg", "images/boots.jpg", "images/breakfast.jpg", "images/bubblegum.jpg", "images/chair.jpg", "images/cthulhu.jpg", "images/dog-duck.jpg", "images/dragon.jpg", "images/pen.jpg", "images/pet-sweep.jpg", "images/scissors.jpg", "images/shark.jpg", "images/sweep.png", "images/tauntaun.jpg", "images/unicorn.jpg", "images/usb.gif", "images/water-can.jpg", "images/wine-glass.jpg"];
+
+var arrayOfItems = [itemNames, imageURLs];
 var allItems = [];
 var numberOfItems = 3;
+var percents = [];
 
 //add constructor for all items
-function Item(name, imageURL) {
+function Item(name, imageURL, timesClicked=0, timesShown=0) {
     this.name = name;
     this.imageURL = imageURL
-    this.timesClicked = 0;
-    this.timesShown = 0;
+    this.timesClicked = timesClicked;
+    this.timesShown = timesShown;
     allItems.push(this);
 }
-//objects
-new Item('bag', 'images/bag.jpg');
-new Item('banana', 'images/banana.jpg');
-new Item('bathroom', 'images/bathroom.jpg');
-new Item('boots', 'images/boots.jpg');
-new Item('breakfast', 'images/breakfast.jpg');
-new Item('bubblegum', 'images/bubblegum.jpg');
-new Item('chair', 'images/chair.jpg');
-new Item('cthulhu', 'images/cthulhu.jpg');
-new Item('dog-duck', 'images/dog-duck.jpg');
-new Item('dragon', 'images/dragon.jpg');
-new Item('pen', 'images/pen.jpg');
-new Item('pet-sweep', 'images/pet-sweep.jpg');
-new Item('scissors', 'images/scissors.jpg');
-new Item('shark', 'images/shark.jpg');
-new Item('sweep', 'images/sweep.png');
-new Item('tauntaun', 'images/tauntaun.jpg');
-new Item('unicorn', 'images/unicorn.jpg');
-new Item('usb', 'images/usb.gif');
-new Item('water-can', 'images/water-can.jpg');
-new Item('wine-glass', 'images/wine-glass.jpg');
 
+//checking for local storage
+
+var savedItemsString = localStorage.getItem('savedItems')
+
+if(savedItemsString) {
+    console.log('using saved data');
+    var arrayOfSavedItems = JSON.parse(savedItemsString);
+
+    //creating item objects from saved data
+    for (var i = 0; i < arrayOfSavedItems.length; i++) {
+       var xyz = new Item(arrayOfSavedItems[i].name,
+            arrayOfSavedItems[i].imageURL,
+            arrayOfSavedItems[i].timesClicked,
+            arrayOfSavedItems[i].timesShown);
+    } 
+}else {
+
+//creating objects from scratch
+for (var i = 0; i  < arrayOfItems[0].length; i++) {
+    new Item(arrayOfItems[0][i], arrayOfItems[1][i]);
+
+}
+}
 //attempting stretch goal of making item images dynamically
 var imageLocation = document.getElementById('images');
 for (var i = 0; i < numberOfItems; i++) {
@@ -52,6 +59,7 @@ for (var i = 0; i < numberOfItems; i++) {
     itemIndex.push(i);
 }
 
+
 //event listener
 for(var i = 0; i < imageElements.length; i++){
     imageElements[i].addEventListener('click', itemWasClicked);
@@ -60,7 +68,7 @@ for(var i = 0; i < imageElements.length; i++){
 //main function
 function itemWasClicked(event) {
         totalclicks++;
-        console.log(totalclicks + ' clicks');
+        // console.log(totalclicks + ' clicks');
 
 //attempting to rework this part for the stretch goal
 
@@ -91,6 +99,8 @@ for (var z = 0; z < imageElements.length; z++) {
 
 //removing event listener when max rounds reached
 if (totalclicks === rounds) {
+
+    localStorage.setItem('savedItems', JSON.stringify(allItems));
     var resultList = document.getElementById('results');
     resultList.style.display = 'inline-block';
 
@@ -113,7 +123,7 @@ if (totalclicks === rounds) {
     if (allItems[i].timesClicked === 0) {
         var math = 0;
     } else {
-        math = Math.round( ( (allItems[i].timesClicked / allItems[0].timesShown).toFixed(2) * 100) );
+        math = Math.round( ( (allItems[i].timesClicked / allItems[i].timesShown).toFixed(2) * 100) );
     }
     li.textContent = `${allItems[i].name}:   Shown ${allItems[i].timesShown} times,    Clicked ${allItems[i].timesClicked} times,   Percent clicked is   ${math}%`
     listNode.appendChild(li);
@@ -123,6 +133,8 @@ var picture = document.getElementById('images');
 picture.style.display = 'none';
  createChart();
  radar();
+ findThePercentage();
+ homerSimpson();
 //end of if statment, long isn't it?  
 }
 //end of function curly bracket
@@ -136,6 +148,17 @@ function findTheProperty(nameOfTheProperty) {
     return answer;
 }
 
+function findThePercentage() {
+    console.log(allItems.length)
+    for (var i = 0; i < allItems.length; i++) {
+        var randomVariable = Math.round( ( (allItems[i].timesClicked / allItems[i].timesShown).toFixed(2) * 100) );
+        percents.push(randomVariable);
+    }
+    console.log(percents);
+    return percents;
+} 
+
+
 function createChart() {
     var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {
@@ -146,12 +169,26 @@ var myChart = new Chart(ctx, {
             label: '# of Votes',
             data: findTheProperty('timesClicked'),
             backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
+               'red',
+                'blue',
+                'purple',
+                'yellow',
+                'green',
+                'black',
+                'gray',
+                'brown',
+                'maroon',
+                'teal',
+                'navy',
+                'olive',
+                'silver',
+                'fuschia',
+                'lime',
+                'DarkTurquoise',
+                'MediumSpringGreen',
+                'MidnightBlue',
+                'ForestGreen',
+                'SaddleBrown'
             ],
             borderColor: [
                 'rgba(255, 99, 132, 1)',
@@ -176,6 +213,59 @@ var myChart = new Chart(ctx, {
 });
 }
 
+function homerSimpson() {
+    var ctx = document.getElementById('myChart2').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+        labels: findTheProperty('name'),
+        datasets: [{
+            label: '% clicked when shown',
+            data: percents,
+            backgroundColor: [
+                'red',
+                'blue',
+                'purple',
+                'yellow',
+                'green',
+                'black',
+                'gray',
+                'brown',
+                'maroon',
+                'teal',
+                'navy',
+                'olive',
+                'silver',
+                'fuschia',
+                'lime',
+                'DarkTurquoise',
+                'MediumSpringGreen',
+                'MidnightBlue',
+                'ForestGreen',
+                'SaddleBrown'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+}
 function radar() {
 new Chart(document.getElementById("radar-chart"), {
     type: 'radar',
@@ -185,7 +275,7 @@ new Chart(document.getElementById("radar-chart"), {
         {
           label: "Times Shown",
           fill: true,
-          backgroundColor: "rgba(179,181,198,0.2)",
+          backgroundColor: "rgba(139,0,0,.5)",
           borderColor: "rgba(179,181,198,1)",
           pointBorderColor: "#fff",
           pointBackgroundColor: "rgba(179,181,198,1)",
@@ -193,7 +283,7 @@ new Chart(document.getElementById("radar-chart"), {
         }, {
           label: "Times Clicked",
           fill: true,
-          backgroundColor: "rgba(255,99,132,0.2)",
+          backgroundColor: "rgba(124, 104, 238,1)",
           borderColor: "rgba(255,99,132,1)",
           pointBorderColor: "#fff",
           pointBackgroundColor: "rgba(255,99,132,1)",
