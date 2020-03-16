@@ -1,24 +1,31 @@
 * {
     box-sizing: border-box;
+   
 }
 header {
-    height: 50px;
-    background-color: burlywood;
+    height: 100px;
+    background-color: #ff0000;
     border-bottom: 2 px solid black;
     margin-bottom: 50px;
+    box-shadow: 10px 10px 5px black;
 }
 
-h1 {
+h2, h1 {
     text-align: center;
     font-size: 30px;
     font-weight: bolder;
-    margin-bottom: 50px;
+    padding-top: 30px;
+    margin-bottom: 30px;
+    font-family: 'Baloo 2', cursive;
+   
 }
 
 img {
-    width: 250px;  
+    width: 250px; 
+    height: 250px; 
     margin: 20px;
     border: 2px solid black;
+    box-shadow: 10px 10px 5px black;
 }
 
 body {
@@ -32,19 +39,32 @@ main {
 ul {
     display: none;
     width: 475px;
-    /* margin: 0 auto; */
     margin-left: 500px;
     background-color: gray;
     border: 2px solid black;
     padding: 25px;
     border-radius: 15px;
+    box-shadow: 10px 10px 5px black;
+}
+
+#preface {
+    margin: 0 auto;
+    width: 900px;
+    background-color: #ffff00;
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 10px 10px 5px black;
+    font-family: 'Baloo 2', cursive;
+    margin-bottom: 50px; 
+
 }
 #images {
     margin: 0 auto;
     width: 900px;
-    background-color: blanchedalmond;
+    background-color: #ffff00;
     border-radius: 15px;
-    padding: 5px;   
+    padding: 5px;
+    box-shadow: 10px 10px 5px black;   
 }
 footer {
     display: none;
@@ -58,11 +78,13 @@ footer div {
     border-radius:  15px;
     padding: 15px;
     display: inline-block;
+    box-shadow: 10px 10px 5px black;
 }
 #bigChart {
     margin-top: 50px;
     width: 800px;
     height: 800px;
+    box-shadow: 10px 10px 5px black;
 }
 li {
     padding: 10px;
