@@ -37,7 +37,7 @@ if(savedItemsString) {
       arrayOfSavedItems[i].imageURL,
       arrayOfSavedItems[i].timesClicked,
       arrayOfSavedItems[i].timesShown);
-  } 
+  }
 }else {
 
   //creating objects from scratch
@@ -68,14 +68,14 @@ for(var i = 0; i < imageElements.length; i++){
 //main function
 function itemWasClicked(event) {
   totalclicks++;
-  // console.log(totalclicks + ' clicks');
+
 
   //attempting to rework this part for the stretch goal
 
   for (var w = 0; w < imageElements.length; w++) {
     var checkAgainst = w + 1;
     var checkAgainst2 = checkAgainst.toString();
-    if (event.srcElement.id == checkAgainst2) {
+    if (event.srcElement.id === checkAgainst2) {
       allItems[itemIndex[w]].timesClicked++;
     }
   }
@@ -83,12 +83,12 @@ function itemWasClicked(event) {
   for (var i = 0; i < itemIndex.length; i++) {
     var nextItem = Math.floor(Math.random() * allItems.length);
     for (var j = 0; j < itemIndex.length; j++) {
-    
+
       if (!itemIndex.every(function(number) {
         return number !== nextItem;
       })) {
         nextItem = Math.floor(Math.random() * allItems.length);
-      } 
+      }
     }
     itemIndex[i] = nextItem;
     allItems[itemIndex[i]].timesShown++;
@@ -97,10 +97,12 @@ function itemWasClicked(event) {
     imageElements[z].src = allItems[itemIndex[z]].imageURL;
   }
 
-  //removing event listener when max rounds reached
+  //Script for when max rounds is reach
   if (totalclicks === rounds) {
 
     localStorage.setItem('savedItems', JSON.stringify(allItems));
+
+    //turning on lists, charts, and changing header text
     var resultList = document.getElementById('results');
     resultList.style.display = 'inline-block';
 
@@ -128,6 +130,9 @@ function itemWasClicked(event) {
       li.textContent = `${allItems[i].name}:   Shown ${allItems[i].timesShown} times,    Clicked ${allItems[i].timesClicked} times,   Percent clicked is   ${math}%`
       listNode.appendChild(li);
     }
+    // turning preface and images off
+    var preface = document.getElementById('preface');
+    preface.style.display = 'none';
     var picture = document.getElementById('images');
     picture.style.display = 'none';
     createChart();
@@ -155,7 +160,7 @@ function findThePercentage() {
   }
   console.log(percents);
   return percents;
-} 
+}
 
 
 function createChart() {
